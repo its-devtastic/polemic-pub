@@ -1,0 +1,37 @@
+{
+  "name": "polemic-pub-api",
+  "private": true,
+  "version": "0.1.0",
+  "description": "API for Polemic Pub",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "@strapi/plugin-graphql": "^4.2.0",
+    "@strapi/plugin-i18n": "4.2.0",
+    "@strapi/plugin-sentry": "^4.2.0",
+    "@strapi/plugin-users-permissions": "4.2.0",
+    "@strapi/provider-email-amazon-ses": "^4.2.0",
+    "@strapi/provider-upload-aws-s3": "^4.2.0",
+    "@strapi/strapi": "4.2.0",
+    "better-sqlite3": "7.4.6",
+    "pg": "^8.7.3"
+  },
+  "author": {
+    "name": "Devtastic",
+    "email": "hi@devtastic.co",
+    "url": "https://devtastic.co"
+  },
+  "strapi": {
+    "uuid": "4052c671-520c-4084-8f56-133c51ce7145"
+  },
+  "engines": {
+    "node": ">=12.x.x <=16.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}
