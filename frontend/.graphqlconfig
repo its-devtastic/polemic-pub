@@ -1,0 +1,14 @@
+{
+  "name": "Strapi Graphql Schema",
+  "schemaPath": "./schema.graphql",
+  "extensions": {
+    "endpoints": {
+      "Strapi Graphql Endpoint" : {
+        "url": "${env:NEXT_PUBLIC_STRAPI_API_URL}/graphql",
+        "headers": {
+          "Authorization": "Bearer ${env:STRAPI_API_KEY}"
+        }
+      }
+    }
+  }
+}

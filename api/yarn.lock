@@ -10109,6 +10109,13 @@ std-env@^2.2.1:
   dependencies:
     ci-info "^3.1.1"
 
+strapi-plugin-passwordless@^4.0.7:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/strapi-plugin-passwordless/-/strapi-plugin-passwordless-4.0.7.tgz#2609205b22daa3e2ea0b9391eb7816e4262c4762"
+  integrity sha512-Ar5FB0Ezr24hR0eesY0f+vfg7os7Q9t8b4DzjgYBRyzRVYTHmtRpcOLUYF4cvDvWQ0DK9wVTy3VflZqx4OI12A==
+  dependencies:
+    nanoid "^3.3.4"
+
 stream-browserify@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/stream-browserify/-/stream-browserify-3.0.0.tgz#22b0a2850cdf6503e73085da1fc7b7d0c2122f2f"

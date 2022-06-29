@@ -1,4 +1,7 @@
 module.exports = ({ env }) => ({
+  passwordless: {
+    enabled: true,
+  },
   upload: {
     config: {
       provider: "aws-s3",
@@ -21,7 +24,7 @@ module.exports = ({ env }) => ({
         amazon: `https://email.${env("AWS_REGION")}.amazonaws.com`,
       },
       settings: {
-        defaultFrom: "Devtastic <email+bot@devtastic.co>",
+        defaultFrom: "PolemicPub <no-reply@polemic.pub>",
         defaultReplyTo: "hi@devtastic.co",
       },
     },

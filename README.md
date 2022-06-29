@@ -1,4 +1,4 @@
-<div align="center" style="margin-bottom: 40px">
+<div align="center">
 <img height="40" src="./frontend/public/logo.svg" alt=""/>
 </div>
 

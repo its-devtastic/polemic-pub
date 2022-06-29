@@ -1,4 +1,4 @@
-FROM node:14-buster
+FROM node:16
 
 WORKDIR /opt/
 
@@ -12,4 +12,4 @@ COPY . .
 
 EXPOSE 1337
 
-CMD ["node", "node_modules/@strapi/strapi/bin/strapi", "start"]
+CMD ["yarn", "start"]
