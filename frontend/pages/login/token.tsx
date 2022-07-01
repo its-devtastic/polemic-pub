@@ -1,15 +1,18 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import Link from "next/link";
 import { Formik, Field } from "formik";
-import { TextInputField, Button } from "evergreen-ui";
 import * as Schema from "yup";
+import { InputText } from "primereact/inputtext";
+import { Button } from "primereact/button";
 
 import useAuth from "../../hooks/useAuth";
+import FormField from "../../components/FormField";
 
 const validationSchema = Schema.object({
   token: Schema.string()
-    .matches(/[a-zA-Z\d_-]/)
+    .matches(/^[a-zA-Z\d_-]+$/, "Token looks invalid")
     .length(20)
     .required("This field is required"),
 });
@@ -23,11 +26,7 @@ const Token: NextPage = () => {
       <Head>
         <title>Submit login token - PolemicPub</title>
       </Head>
-      <div className="font-sans text-slate-900 flex flex-col items-center justify-center min-h-screen">
-        <div className="mb-24">
-          <img src="/logo.svg" alt="" className="h-8" />
-        </div>
-        <h1 className="text-2xl font-bold mb-4 text-slate-700">Submit token</h1>
+      <div className="font-sans text-slate-900 flex flex-col items-center justify-center min-h-screen bg-slate-100">
         <Formik
           initialValues={{ token: "" }}
           validationSchema={validationSchema}
@@ -36,23 +35,38 @@ const Token: NextPage = () => {
             await router.push("/");
           }}
         >
-          {({ submitForm, errors, isValid, isSubmitting }) => (
-            <div className="w-80 max-w-full bg-slate-50 p-8 rounded-md border border-slate-300 shadow-lg shadow-slate-900/5">
-              <Field
-                name="token"
-                as={TextInputField}
-                label="Your login token"
-                description="Should be a 20 character string"
-                validationMessage={errors.token}
-                disabled={isSubmitting}
-              />
-              <Button
-                appearance="primary"
-                onClick={() => isValid && submitForm()}
-                isLoading={isSubmitting}
-              >
-                Submit
-              </Button>
+          {({ submitForm, isValid, isSubmitting }) => (
+            <div className="w-full max-w-md bg-white p-6 rounded-md shadow-lg shadow-slate-900/10 flex flex-col items-center">
+              <div className="mb-2 inline">
+                <img src="/icon.png" alt="" className="h-16" />
+              </div>
+              <h1 className="text-2xl font-normal mb-4">
+                {"You've got a message!"}
+              </h1>
+              <div className="text-sm mb-12 text-center">
+                <span className="text-slate-500">
+                  {"Didn't receive an email? Check your spam folder or "}
+                </span>
+                <Link href="/login" legacyBehavior>
+                  <a className="text-indigo-600">Request a new code</a>
+                </Link>
+              </div>
+              <FormField label="Your login token" className="mb-4">
+                <div className="p-inputgroup">
+                  <Field
+                    name="token"
+                    as={InputText}
+                    disabled={isSubmitting}
+                    keyfilter={/^[a-zA-Z\d_-]+$/}
+                  />
+
+                  <Button
+                    onClick={() => isValid && submitForm()}
+                    loading={isSubmitting}
+                    icon="pi pi-arrow-right"
+                  />
+                </div>
+              </FormField>
             </div>
           )}
         </Formik>

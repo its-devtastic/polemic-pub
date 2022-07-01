@@ -1,7 +1,11 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { Button } from "primereact/button";
 
 const Home: NextPage = () => {
+  const router = useRouter();
+
   return (
     <>
       <Head>
@@ -23,7 +27,8 @@ const Home: NextPage = () => {
           </a>{" "}
           documents
         </div>
-        <div className="text-slate-400 select-none">Coming soon</div>
+
+        <Button onClick={() => router.push("/signup")}>Create account</Button>
       </div>
     </>
   );
