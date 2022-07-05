@@ -5,4 +5,4 @@ export const generateKey = customAlphabet(
 );
 
 export const generatePrefixedId = (prefix: string) =>
-  `${prefix}_${generateKey(16)}`;
+  `${prefix}_${generateKey(10)}`;

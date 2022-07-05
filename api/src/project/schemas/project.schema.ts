@@ -1,15 +1,15 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { Document } from "mongoose";
 
-import { Organization } from "~/organization/schemas/organization.schema";
-import { generateId } from "~/utils";
+import { generatePrefixedId } from "~/utils";
+import { User } from "~/user/schemas/user.schema";
 
 export type ProjectDocument = Project & Document;
 
 @Schema({ timestamps: true })
 export class Project {
   @Prop({
-    default: () => generateId("prj"),
+    default: () => generatePrefixedId("prj"),
   })
   _id: string;
 
@@ -21,10 +21,10 @@ export class Project {
 
   @Prop({
     type: mongoose.Schema.Types.String,
-    ref: "Organization",
+    ref: "User",
     required: true,
   })
-  organization: Organization;
+  user: User;
 }
 
 export const ProjectSchema = SchemaFactory.createForClass(Project);

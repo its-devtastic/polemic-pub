@@ -1,7 +1,6 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 
-import { OrganizationModule } from "~/organization/organization.module";
 import { ProjectService } from "./project.service";
 import { ProjectController } from "./project.controller";
 import { Project, ProjectSchema } from "./schemas/project.schema";
@@ -14,10 +13,9 @@ import { Project, ProjectSchema } from "./schemas/project.schema";
         schema: ProjectSchema,
       },
     ]),
-    OrganizationModule,
   ],
   controllers: [ProjectController],
   providers: [ProjectService],
-  exports: [MongooseModule, OrganizationModule],
+  exports: [MongooseModule],
 })
 export class ProjectModule {}

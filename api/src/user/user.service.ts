@@ -16,7 +16,7 @@ export class UserService {
     return await this.userModel.create(createUserDto);
   }
 
-  // async findBySub(sub: string): Promise<UserDocument> {
-  //   return this.userModel.findOne({ sub });
-  // }
+  async findByEmail(email: string): Promise<UserDocument> {
+    return this.userModel.findOne({ email });
+  }
 }

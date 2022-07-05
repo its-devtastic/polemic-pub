@@ -14,15 +14,12 @@ import {
 import { PaginateModel } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
 
-import { ORG_HEADER_KEY } from "~/constants";
 import { JwtAuthGuard } from "~/auth/jwt-auth.guard";
-import { OrganizationGuard } from "~/organization/organization.guard";
 import { CreateProjectDto } from "./dto/create-project.dto";
 import { UpdateProjectDto } from "./dto/update-project.dto";
 import { Project, ProjectDocument } from "./schemas/project.schema";
 
 @Controller("projects")
-@UseGuards(OrganizationGuard)
 @UseGuards(JwtAuthGuard)
 export class ProjectController {
   constructor(
@@ -33,7 +30,7 @@ export class ProjectController {
   @Post()
   async create(@Req() req, @Body() createProjectDto: CreateProjectDto) {
     return await this.projectModel.create({
-      organization: req.header(ORG_HEADER_KEY),
+      user: req.user,
       ...createProjectDto,
     });
   }
@@ -43,7 +40,7 @@ export class ProjectController {
     return await this.projectModel.paginate(
       {
         name: RegExp(query.name ?? "", "i"),
-        organization: req.header(ORG_HEADER_KEY),
+        user: req.user,
         deleted: false,
       },
       { page: query.page, sort: query.sort }
@@ -54,7 +51,7 @@ export class ProjectController {
   async findOne(@Req() req, @Param("id") _id: string) {
     const doc = await this.projectModel.findOne({
       _id,
-      organization: req.header(ORG_HEADER_KEY),
+      user: req.user,
       deleted: false,
     });
 
@@ -74,7 +71,7 @@ export class ProjectController {
     const doc = await this.projectModel.findOneAndUpdate(
       {
         _id,
-        organization: req.header(ORG_HEADER_KEY),
+        user: req.user,
         deleted: false,
       },
       updateProjectDto,
@@ -94,7 +91,7 @@ export class ProjectController {
     await this.projectModel.findOneAndUpdate(
       {
         _id,
-        organization: req.header(ORG_HEADER_KEY),
+        user: req.user,
       },
       { deleted: true }
     );
