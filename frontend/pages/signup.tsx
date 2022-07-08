@@ -7,8 +7,8 @@ import * as Schema from "yup";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 
-import useAuth from "../hooks/useAuth";
-import FormField from "../components/FormField";
+import useAuth from "~/hooks/useAuth";
+import FormField from "~/components/FormField";
 
 const validationSchema = Schema.object({
   email: Schema.string().email().required("This field is required"),
@@ -52,7 +52,7 @@ const Signup: NextPage = () => {
                 <span className="text-slate-500">
                   {"Already have an account? "}
                 </span>
-                <Link href="/signup" legacyBehavior>
+                <Link href="/login" legacyBehavior>
                   <a className="text-indigo-600">Log in</a>
                 </Link>
               </div>

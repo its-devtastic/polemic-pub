@@ -3,8 +3,11 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { Button } from "primereact/button";
 
+import useAuth from "~/hooks/useAuth";
+
 const Home: NextPage = () => {
   const router = useRouter();
+  const { loggedIn } = useAuth();
 
   return (
     <>
@@ -28,7 +31,22 @@ const Home: NextPage = () => {
           documents
         </div>
 
-        <Button onClick={() => router.push("/signup")}>Create account</Button>
+        <div className="flex space-x-2">
+          <Button
+            onClick={() => router.push(loggedIn ? "/dashboard" : "/signup")}
+            className="p-button-outlined"
+          >
+            {loggedIn ? "Go to account" : "Create account"}
+          </Button>
+          {!loggedIn && (
+            <Button
+              onClick={() => router.push("/login")}
+              className="p-button-text"
+            >
+              Log in
+            </Button>
+          )}
+        </div>
       </div>
     </>
   );

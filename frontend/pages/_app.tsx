@@ -6,14 +6,16 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 
-import "../styles/globals.css";
-
-import AuthProvider from "../providers/AuthProvider";
+import "~/styles/globals.css";
+import AuthProvider from "~/providers/AuthProvider";
+import HttpProvider from "~/providers/HttpProvider";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AuthProvider>
-      <Component {...pageProps} />
+      <HttpProvider>
+        <Component {...pageProps} />
+      </HttpProvider>
     </AuthProvider>
   );
 }

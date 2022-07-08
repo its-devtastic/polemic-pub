@@ -7,8 +7,8 @@ import * as Schema from "yup";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 
-import useAuth from "../../hooks/useAuth";
-import FormField from "../../components/FormField";
+import useAuth from "~/hooks/useAuth";
+import FormField from "~/components/FormField";
 
 const validationSchema = Schema.object({
   email: Schema.string().email().required("This field is required"),

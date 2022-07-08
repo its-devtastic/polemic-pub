@@ -1,13 +1,14 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
-import * as mongoosePaginate from "mongoose-paginate-v2";
+import mongoosePaginate from "mongoose-paginate-v2";
 
 import { AppController } from "~/app.controller";
 import { AppService } from "~/app.service";
 import { AuthModule } from "~/auth/auth.module";
 import { UserModule } from "~/user/user.module";
 import { ProjectModule } from "~/project/project.module";
+import { EmailModule } from "./email/email.module";
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { ProjectModule } from "~/project/project.module";
     AuthModule,
     UserModule,
     ProjectModule,
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -27,6 +27,12 @@ export class Once {
     required: true,
   })
   user: User;
+
+  @Prop()
+  createdAt?: Date;
+
+  @Prop()
+  updatedAt?: Date;
 }
 
 export const OnceSchema = SchemaFactory.createForClass(Once);

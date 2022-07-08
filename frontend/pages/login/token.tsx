@@ -7,8 +7,8 @@ import * as Schema from "yup";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 
-import useAuth from "../../hooks/useAuth";
-import FormField from "../../components/FormField";
+import useAuth from "~/hooks/useAuth";
+import FormField from "~/components/FormField";
 
 const validationSchema = Schema.object({
   token: Schema.string()
