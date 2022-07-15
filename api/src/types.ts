@@ -16,3 +16,8 @@ export enum Environment {
   Staging = "staging",
   Development = "development",
 }
+
+export interface IVFile {
+  content: string;
+  uri: string;
+}

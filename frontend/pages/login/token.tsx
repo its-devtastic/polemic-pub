@@ -13,7 +13,7 @@ import FormField from "~/components/FormField";
 const validationSchema = Schema.object({
   token: Schema.string()
     .matches(/^[a-zA-Z\d_-]+$/, "Token looks invalid")
-    .length(20)
+    .length(8)
     .required("This field is required"),
 });
 

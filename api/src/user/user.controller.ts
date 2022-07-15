@@ -8,9 +8,12 @@ import {
   Req,
   NotFoundException,
   BadRequestException,
+  UseGuards,
 } from "@nestjs/common";
 import { PaginateModel } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
+
+import { JwtAuthGuard } from "~/auth/jwt-auth.guard";
 
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
@@ -40,10 +43,11 @@ export class UserController {
     return await this.userModel.create(createUserDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get("me")
   async findCurrent(@Req() req) {
     const doc = await this.userModel.findOne({
-      _id: req._id,
+      _id: req.user._id,
       deleted: false,
     });
 
@@ -54,6 +58,7 @@ export class UserController {
     return doc;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch("me")
   async update(@Req() req, @Body() updateUserDto: UpdateUserDto) {
     const doc = await this.userModel.findOneAndUpdate(
@@ -73,6 +78,7 @@ export class UserController {
     return doc;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete("me")
   async remove(@Req() req) {
     await this.userModel.findOneAndUpdate(

@@ -15,9 +15,9 @@ import { PaginateModel } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
 
 import { JwtAuthGuard } from "~/auth/jwt-auth.guard";
-import { CreateProjectDto } from "./dto/create-project.dto";
-import { UpdateProjectDto } from "./dto/update-project.dto";
-import { Project, ProjectDocument } from "./schemas/project.schema";
+import { CreateProjectDto } from "../dto/create-project.dto";
+import { UpdateProjectDto } from "../dto/update-project.dto";
+import { Project, ProjectDocument } from "../schemas/project.schema";
 
 @Controller("projects")
 @UseGuards(JwtAuthGuard)
@@ -43,17 +43,24 @@ export class ProjectController {
         user: req.user,
         deleted: false,
       },
-      { page: query.page, sort: query.sort }
+      {
+        page: query.page,
+        sort: query.sort,
+        projection: ["_id", "name", "createdAt", "updatedAt"],
+      }
     );
   }
 
   @Get(":id")
   async findOne(@Req() req, @Param("id") _id: string) {
-    const doc = await this.projectModel.findOne({
-      _id,
-      user: req.user,
-      deleted: false,
-    });
+    const doc = await this.projectModel.findOne(
+      {
+        _id,
+        user: req.user,
+        deleted: false,
+      },
+      { projection: ["_id", "name", "createdAt", "updatedAt"] }
+    );
 
     if (!doc) {
       throw new NotFoundException();

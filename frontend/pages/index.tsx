@@ -32,19 +32,28 @@ const Home: NextPage = () => {
         </div>
 
         <div className="flex space-x-2">
-          <Button
-            onClick={() => router.push(loggedIn ? "/dashboard" : "/signup")}
-            className="p-button-outlined"
-          >
-            {loggedIn ? "Go to account" : "Create account"}
-          </Button>
-          {!loggedIn && (
+          {loggedIn ? (
             <Button
-              onClick={() => router.push("/login")}
-              className="p-button-text"
+              onClick={() => router.push("/dashboard")}
+              className="p-button-outlined"
             >
-              Log in
+              Go to dashboard
             </Button>
+          ) : (
+            <>
+              <Button
+                onClick={() => router.push("/signup")}
+                className="p-button-outlined"
+              >
+                Create account
+              </Button>
+              <Button
+                onClick={() => router.push("/login")}
+                className="p-button-text"
+              >
+                Log in
+              </Button>
+            </>
           )}
         </div>
       </div>

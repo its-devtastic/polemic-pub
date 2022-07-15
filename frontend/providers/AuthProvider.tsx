@@ -1,5 +1,7 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useLocalStorage } from "react-use";
+import React, { useCallback, useState } from "react";
+import jwt_decode from "jwt-decode";
+import { useRouter } from "next/router";
+import { useEffectOnce } from "react-use";
 
 import axios from "~/utils/axios";
 
@@ -8,38 +10,53 @@ export const Context = React.createContext<IContext>({} as IContext);
 const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [stored, setValue, removeValue] =
-    useLocalStorage<string>("polemic.jwt");
-  const [jwt, setJwt] = useState<Jwt | null>(stored ?? null);
+  const router = useRouter();
+  const [jwt, setJwt] = useState<Jwt | null>(null);
   const [user, setUser] = useState<IUser | null>(null);
 
   const sendMagicLink = useCallback(
     async (data: { email: string; username?: string }) => {
-      await axios.post(`/api/passwordless/send-link`, data);
+      await axios.post(`/auth/once`, data);
     },
     []
   );
 
   const submitToken = useCallback(async (token: string) => {
-    const r = await axios.get<{ jwt: Jwt; user: IUser }>(
-      `/api/passwordless/login`,
-      { params: { loginToken: token } }
-    );
-    setJwt(r.data.jwt);
-    setUser(r.data.user);
+    const r = await axios.post<{ accessToken: Jwt }>(`/auth/jwt`, {
+      token,
+    });
+    const { accessToken } = r.data;
+    setJwt(accessToken);
+    setUser(jwt_decode(accessToken));
+    localStorage.setItem("polemic.jwt", accessToken);
   }, []);
 
-  useEffect(() => {
-    if (jwt) {
-      setValue(jwt);
-    } else {
-      removeValue();
+  // Restore JWT token from local storage
+  useEffectOnce(() => {
+    const accessToken = localStorage.getItem("polemic.jwt") ?? null;
+
+    if (accessToken) {
+      setJwt(accessToken);
+      setUser(jwt_decode(accessToken));
     }
-  }, [jwt, removeValue, setValue]);
+  });
+
+  // Store JWT token in local storage
+  const logOut = useCallback(async () => {
+    localStorage.removeItem("polemic.jwt");
+    await router.push("/");
+  }, [router]);
 
   return (
     <Context.Provider
-      value={{ sendMagicLink, submitToken, user, jwt, loggedIn: Boolean(jwt) }}
+      value={{
+        sendMagicLink,
+        submitToken,
+        logOut,
+        user,
+        jwt,
+        loggedIn: Boolean(jwt),
+      }}
     >
       {children}
     </Context.Provider>
@@ -61,4 +78,5 @@ interface IContext {
   loggedIn: boolean;
   sendMagicLink(data: { email: string; username?: string }): void;
   submitToken(token: string): void;
+  logOut(): void;
 }
